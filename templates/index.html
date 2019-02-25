@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block anchor %}
+        {% if status == "Loggedout" %}
+            <a class="nav-link " href="{{ url_for('login') }}" xmlns="http://www.w3.org/1999/html">
+               Login
+            </a>
+        {% else %}
+            <a class="nav-link " href="{{ url_for('logout') }}">
+                Logout <strong>{{ user_email }}</strong>
+            </a>
+        {% endif %}
+
+{% endblock %}
+
+{% block body %}
+    <br>
+    <p>
+        Welcome to <strong>myReads</strong> which has your favourite books in th store
+    </p>
+
+{% endblock %}
