@@ -1,0 +1,31 @@
+body{
+    background: style="background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnqHYIgj89hMKwluQQUgZcduccOQiodNehrNamAB3O7JWdFfupDQ; background-repeat:no-repeat;  background-size:100%; background-position: 50% 50%";
+}
+.navbar {
+    border-radius: 0;
+}
+
+a.navbar-brand {
+    font-family:'algeria, san-serif' ;
+    font-size: 40px;
+    text-align: center;
+
+}
+
+p {
+    text-align: center;
+    font-size: 50px;
+}
+
+form p {
+    text-align: center;
+}
+
+#box{
+    color: blue;
+}
+#login{
+    text-align: center;
+    font-size: 40px;
+    font-family: serif;
+}
