@@ -1,10 +1,11 @@
 from flask import Flask,  request, jsonify, session
 from flask_sqlalchemy import SQLAlchemy
+# from sqlalchemy.ext.automap import automap_base
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_session import Session
 from sqlalchemy.orm import scoped_session, sessionmaker
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, Column
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)

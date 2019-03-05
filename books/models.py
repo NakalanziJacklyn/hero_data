@@ -3,10 +3,12 @@ from books import db, login_manager
 from flask_login import UserMixin
 
 
-
 @login_manager.user_loader
 def load_user(user_id):
     return Users.query.get(int(user_id))
+# @login_manager.user_loader
+# def load_user(user_id):
+#     return None
 
 
 class Users(db.Model, UserMixin):
@@ -14,20 +16,22 @@ class Users(db.Model, UserMixin):
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
+    books=db.relationship('Reviews', backref='writer', lazy=True)
     
 
-    def get_reset_token(self, expires_sec=1800):
-        s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
-        return s.dumps({'user_id': self.id}).decode('utf-8')
 
-    @staticmethod
-    def verify_reset_token(token):
-        s = Serializer(current_app.config['SECRET_KEY'])
-        try:
-            user_id = s.loads(token)['user_id']
-        except:
-            return None
-        return Users.query.get(user_id)
+class Books(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    isbn = db.Column(db.String(50))
+    author = db.Column(db.String(50))
+    title = db.Column(db.String(50))
+    year = db.Column(db.Integer) 
+    books=db.relationship('Reviews', backref='read', lazy=True)  
 
-    def __repr__(self):
-        return f"Users('{self.username}', '{self.email}', '{self.image_file}')"
+class Reviews(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    review= db.Column(db.Integer, nullable=False)
+    book_id=db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
+    user_id=db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    comment=db.Column(db.String(), nullable=False)
+

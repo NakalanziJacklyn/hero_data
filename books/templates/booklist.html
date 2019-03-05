@@ -5,7 +5,7 @@
     <link rel="icon" href="{{ url_for('static', filename = 'myreads.jpeg') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>myReads</title>
+    <title>Hero Stories</title>
 </head>
 <body style="background-color:#fff;">
 
@@ -37,7 +37,7 @@
         
             {% for book in book_list %}
                 <ul>
-                    <a href="#"> <b>{{ book.title }}</b> by {{ book.author }} </a>
+                    <a href="{{url_for('detail',book_id=book.id)}}"> <b>{{ book.title }}</b> by {{ book.author }} in the year </b> by {{ book.year }} </a>
                 </ul>
             {% endfor %}
         

@@ -1,38 +1,11 @@
 /__pycache__
-/LICENSE
 /base
-# Page to show details info about book
-# Page to show details info about book
-@app.route("/detail/<int:book_id>", methods=["GET", "POST"])
-def detail(book_id):
-    if not current_user.is_authenticated:
-        return render_template("login.html", error_message="Please Login First", work="Login")
 
-    book = db.execute("SELECT * FROM books WHERE id = :book_id", {"book_id": book_id}).fetchone()
-    if book is None:
-        return render_template("error.html", error_message="We got an invalid book id"
-                                                           ". Please check for the errors and try again.")
-
-    # When review if submitted for the book.
-    if request.method == "POST":
-        user_id = session["user_id"]
-        rating = request.form.get("rating")
-        comment = request.form.get("comment")
-        if db.execute("SELECT id FROM reviews WHERE user_id = :user_id AND book_id = :book_id",
-                      {"user_id": user_id, "book_id": book_id}).fetchone() is None:
-            db.execute(
-                "INSERT INTO reviews (user_id, book_id, rating, comment) VALUES (:user_id, :book_id, :rating, :comment)",
-                {"book_id": book.id, "user_id": user_id, "rating": rating, "comment": comment})
-        else:
-            db.execute(
-                "UPDATE reviews SET comment = :comment, rating = :rating WHERE user_id = :user_id AND book_id = :book_id",
-                {"comment": comment, "rating": rating, "user_id": user_id, "book_id": book_id})
-        db.commit()
 
     """Goodreads API"""
     # Processing the json data
     res = requests.get("https://www.goodreads.com/book/review_counts.json",
-                       params={"key": "HD8qbAr9QIMZRCGGI5cEkQ", "isbns": book.isbn}).json()["books"][0]
+                       params={"key": "3H6GDwms6FaFQpmFQHqNQ", "isbns": book.isbn}).json()["books"][0]
 
     ratings_count = res["ratings_count"]
     average_rating = res["average_rating"]

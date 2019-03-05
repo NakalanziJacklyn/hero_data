@@ -2,10 +2,10 @@ import os
 import secrets
 from flask import render_template, url_for, flash, redirect, request
 from books import app, db, bcrypt
-from books.forms import RegistrationForm, LoginForm
-from books.models import Users
+from books.forms import RegistrationForm, LoginForm, ReviewForm,SearchForm
+from books.models import Users,Books,Reviews
 from flask_login import login_user, current_user, logout_user, login_required
-from flask_session import Session
+
 
 
 # Homepage
@@ -77,31 +77,48 @@ def booklist():
         return render_template("login.html", error_message="Please Login First", work="Login")
 
     book_column = request.form.get("book_column")
-    query = request.form.get("query")
+    inputs = request.form.get("query")
+   
+
 
     if book_column == "year":
-        book_list = db.execute("SELECT * FROM books WHERE year = :query", {"query": query}).fetchall()
-    else:
-        book_list = db.execute("SELECT * FROM books WHERE UPPER(" + book_column + ") = :query ORDER BY title",
-                               {"query": query.upper()}).fetchall()
-
-    # Is whole of the info i.e. ISBN, title matches...
-    if len(book_list):
+        book_list=Books.query.filter_by(year=inputs)
+        
         return render_template("booklist.html", book_list=book_list)
 
-    elif book_column != "year":
-        error_message = "We couldn't find the books you searched for."
-        book_list = db.execute("SELECT * FROM books WHERE UPPER(" + book_column + ") LIKE :query ORDER BY title",
-                               {"query": "%" + query.upper() + "%"}).fetchall()
-        if not len(book_list):
-            return render_template("error.html", error_message=error_message)
-        message = "You might be searching for:"
-        return render_template("booklist.html", error_message=error_message, book_list=book_list, message=message,
-                               )
+    elif book_column == "author":
+        book_list=Books.query.filter_by(author=inputs)
+
+        return render_template("booklist.html", book_list=book_list)
+
+    elif book_column == "isbn":
+        book_list=Books.query.filter_by(isbn=inputs)
+
+        return render_template("booklist.html", book_list=book_list)
+
+    elif book_column == "title":
+        book_list=Books.query.filter_by(title=inputs)
+        
+        return render_template("booklist.html", book_list=book_list)
+
     else:
         return render_template("error.html", error_message="We didn't find any book with the year you typed."
                                                           " Please check for errors and try again.")
 
+# Page to show details info about book
+@app.route("/detail/<int:book_id>",methods=['GET','POST'])
+def detail(book_id):
+    form=ReviewForm()
+    if form.validate_on_submit():
+        comment = Reviews(review=form.review.data, comment=form.comment.data)
+        db.session.add(comment)
+        db.session.commit()
+        flash('your comment has been added', 'success')
+        return redirect(url_for('index'))
 
+    book=Books.query.get_or_404(book_id)
+    return render_template("detail.html", success=True, book=book, form=form)
+    
 
-
+    
+   

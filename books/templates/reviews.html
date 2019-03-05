@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="container">
+    <section class="row">
+        <div class="col s12">
+            <h1>{{book.title}}</h1>
+        </div>
+
+        <div class="col s6 l4">
+            <p>ISBN: {{book.isbn}}</p>
+        </div>
+
+        <div class="col s6 l4">
+            <p>Author: {{book.author}}</p>
+        </div>
+
+        <div class="col s6 l4">
+            <p>Year: {{book.year}}</p>
+        </div>
+
+
+    </section>
+</div>
+{% endblock %}
