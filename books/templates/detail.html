@@ -1,55 +1,21 @@
 {% extends "layout.html" %}
 
 {% block body %}
+
+<div class="row center">
     <h1>Book Details:</h1>
     <p>
     ISBN: {{ book.isbn }}<br>
     Title: {{ book.title }}<br>
     Author: {{ book.author }}<br>
     Year: {{ book.year }}<br>
-    </p>
+    </p>   
+</div>
+   <button> <a class="ml-2" href="{{ url_for('comment',book_id=book.id) }}">Leave a comment</a></button>
 
+{% for review in reviews %}
+<div>{{review.review}}</div>
+<div>{{review.comment}}</div>
+{% endfor %}
 
-        <div class="content-section">
-            <form method="POST" action="">
-                {{ form.hidden_tag() }}
-                <fieldset class="form-group">
-                    <legend class="border-bottom mb-4" id="login">Leave a Comment</legend>
-                    
-                    <div class="form-group">
-                        {{ form.review.label(class="form-control-label") }}
-                        {% if form.review.errors %}
-                            {{ form.review(class="form-control form-control-lg is-invalid") }}
-                            <div class="invalid-feedback">
-                                {% for error in form.password.errors %}
-                                    <span>{{ error }}</span>
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            {{ form.review(class="form-control form-control-lg") }}
-                        {% endif %}
-                    </div>
-
-                    <div class="form-group">
-                            {{ form.comment.label(class="form-control-label") }}
-                            {% if form.comment.errors %}
-                                {{ form.comment(class="form-control form-control-lg is-invalid") }}
-                                <div class="invalid-feedback">
-                                    {% for error in form.comment.errors %}
-                                        <span>{{ error }}</span>
-                                    {% endfor %}
-                                </div>
-                            {% else %}
-                                {{ form.comment(class="form-control form-control-lg") }}
-                            {% endif %}
-                        </div>
-                    
-                </fieldset>
-                <div class="form-group">
-                    {{ form.submit(class="btn btn-outline-info") }}
-                </div>
-            </form>
-        </div>
-
-    
 {% endblock %}

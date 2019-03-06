@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from flask_login import current_user
 from wtforms import StringField, PasswordField, SubmitField, BooleanField,IntegerField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from books.models import Users
+from books.models import User
 
 
 class RegistrationForm(FlaskForm):
@@ -34,3 +34,7 @@ class SearchForm(FlaskForm):
     author = SubmitField('author', validators=[DataRequired()]) 
     year = SubmitField('year', validators=[DataRequired()]) 
     submit = SubmitField('search')    
+
+# class CommentForm(FlaskForm):
+#     comment = StringField("Comment", validators=[DataRequired()])
+#     submit = SubmitField("submit")    

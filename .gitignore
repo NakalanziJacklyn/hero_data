@@ -9,10 +9,10 @@
 
     ratings_count = res["ratings_count"]
     average_rating = res["average_rating"]
-    reviews = db.execute("SELECT * FROM reviews WHERE book_id = :book_id", {"book_id": book.id}).fetchall()
+    review = db.execute("SELECT * FROM review WHERE book_id = :book_id", {"book_id": book.id}).fetchall()
     users = []
     for review in reviews:
-        email = db.execute("SELECT email FROM users WHERE id = :user_id", {"user_id": review.user_id}).fetchone().email
+        email = db.execute("SELECT email FROM user WHERE id = :user_id", {"user_id": review.user_id}).fetchone().email
         users.append((email, review))
 
     return render_template("detail.html", book=book, users=users,
@@ -22,11 +22,11 @@
 # Page for the website's API
 @app.route("/api/<ISBN>", methods=["GET"])
 def api(ISBN):
-    book = db.execute("SELECT * FROM books WHERE isbn = :ISBN", {"ISBN": ISBN}).fetchone()
+    book = db.execute("SELECT * FROM book WHERE isbn = :ISBN", {"ISBN": ISBN}).fetchone()
     if book is None:
         return render_template("error.html", error_message="We got an invalid ISBN. "
                                                            "Please check for the errors and try again.")
-    reviews = db.execute("SELECT * FROM reviews WHERE book_id = :book_id", {"book_id": book.id}).fetchall()
+    review = db.execute("SELECT * FROM reviews WHERE book_id = :book_id", {"book_id": book.id}).fetchall()
     count = 0
     rating = 0
     for review in reviews:

@@ -1,4 +1,3 @@
-isbn,title,author,year
 0380795272,Krondor: The Betrayal,Raymond E. Feist,1998
 1416949658,The Dark Is Rising,Susan Cooper,1973
 1857231082,The Black Unicorn ,Terry Brooks,1987
@@ -3897,7 +3896,7 @@ isbn,title,author,year
 0449911942,Rabbit at Rest,John Updike,1990
 0679735771,American Psycho,Bret Easton Ellis,1991
 0312532768,Blue Moon,Alyson Noel,2009
-0425227944,The Darkest Hour,Maya Banks,2010
+0425227944,,Maya Banks,2010
 1502446936,Stepbrother Dearest,Penelope Ward,2014
 1439102252,Wishful Drinking,Carrie Fisher,2008
 0394800028,The Cat in the Hat Comes Back,Dr. Seuss,1958
@@ -4087,7 +4086,7 @@ isbn,title,author,year
 1841493015,Club Dead,Charlaine Harris,2003
 0812504690,The Jungle Book,Rudyard Kipling,1894
 0812536363,Rainbows End,Vernor Vinge,2006
-0425083896,Books of Blood: Volume One,Clive Barker,1984
+0425083896,Book of Blood: Volume One,Clive Barker,1984
 0486266893,Candide,Voltaire,1759
 0061579033,The Family Fang,Kevin    Wilson,2011
 0385730306,The Sweet Far Thing,Libba Bray,2007

@@ -2,8 +2,8 @@ import os
 import secrets
 from flask import render_template, url_for, flash, redirect, request
 from books import app, db, bcrypt
-from books.forms import RegistrationForm, LoginForm, ReviewForm,SearchForm
-from books.models import Users,Books,Reviews
+from books.forms import RegistrationForm, LoginForm, ReviewForm, SearchForm
+from books.models import User,Book,Review
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -27,7 +27,7 @@ def login():
         return redirect(url_for('search'))
     form = LoginForm()
     if form.validate_on_submit():
-        user = Users.query.filter_by(email=form.email.data).first()
+        user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
@@ -40,6 +40,7 @@ def login():
 
 # Logout for the website
 @app.route("/logout")
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('index'))
@@ -54,7 +55,7 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = Users(username=form.username.data, email=form.email.data, password=hashed_password)
+        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
         db.session.add(user)
         db.session.commit()
         flash('Your account has been created! You are now able to log in', 'success')
@@ -64,14 +65,15 @@ def register():
 
 
 # Comes after logging in
-@login_required
 @app.route("/search", methods=["GET", "POST"])
+@login_required
 def search():
     return render_template("search.html")
 
 
 # Page to show books as per search result
 @app.route("/booklist", methods=["POST"])
+@login_required
 def booklist():
     if not current_user.is_authenticated:
         return render_template("login.html", error_message="Please Login First", work="Login")
@@ -82,22 +84,22 @@ def booklist():
 
 
     if book_column == "year":
-        book_list=Books.query.filter_by(year=inputs)
+        book_list=Book.query.filter_by(year=inputs)
         
         return render_template("booklist.html", book_list=book_list)
 
     elif book_column == "author":
-        book_list=Books.query.filter_by(author=inputs)
+        book_list=Book.query.filter_by(author=inputs)
 
         return render_template("booklist.html", book_list=book_list)
 
     elif book_column == "isbn":
-        book_list=Books.query.filter_by(isbn=inputs)
+        book_list=Book.query.filter_by(isbn=inputs)
 
         return render_template("booklist.html", book_list=book_list)
 
     elif book_column == "title":
-        book_list=Books.query.filter_by(title=inputs)
+        book_list=Book.query.filter_by(title=inputs)
         
         return render_template("booklist.html", book_list=book_list)
 
@@ -107,18 +109,34 @@ def booklist():
 
 # Page to show details info about book
 @app.route("/detail/<int:book_id>",methods=['GET','POST'])
+@login_required
 def detail(book_id):
+    reviews=Review.query.filter_by(book_id=book_id).all()
+    book=Book.query.get_or_404(book_id)
+    return render_template("detail.html", success=True, book=book, reviews=reviews)
+    
+
+# user comments
+@app.route("/detail/<int:book_id>/comment", methods=['GET', 'POST'])
+@login_required
+def comment(book_id):
     form=ReviewForm()
     if form.validate_on_submit():
-        comment = Reviews(review=form.review.data, comment=form.comment.data)
+        comment = Review(review=form.review.data, comment=form.comment.data, book_id=book_id, writer=current_user)
         db.session.add(comment)
         db.session.commit()
         flash('your comment has been added', 'success')
-        return redirect(url_for('index'))
+        return redirect(url_for('detail', book_id=book_id))
+    return render_template('comment.html', title='Comment',
+                           form=form, legend='Comment')
 
-    book=Books.query.get_or_404(book_id)
-    return render_template("detail.html", success=True, book=book, form=form)
-    
 
-    
-   
+    # form = CommentForm()
+    # if form.validate_on_submit():
+    #     comment= Comment(comment=form.comment.data)
+    #     db.session.add(comment)
+    #     db.session.commit()
+    #     flash('Comment Successful', 'success')
+    #     return redirect(url_for('detail'))
+    # return render_template('comment.html', title='Comment',
+    #                        form=form, legend='Comment')
