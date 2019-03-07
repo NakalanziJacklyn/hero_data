@@ -16,9 +16,9 @@ body{
     font-size: 28px;
     color: #000;
 } 
-p .side {
+#side {
     text-align: center;
-    font-size: 100px; 
+    font-size: 80px; 
     
 }
 .syd{
@@ -36,11 +36,11 @@ button{
 .center1{
     border-radius: 10px;
     /* margin-left: 40%; */
-    font-size: 20px;
+    font-size: 25px;
     /* background-color: #615f5ed3; */
     height: 10%;
     width: 22%; 
-    color: lawngreen;
+    color: black;
 }
 
 form p {
@@ -86,7 +86,7 @@ form p {
 
 .container p{
     color: rgb(10, 10, 10);
-    font-size: 30px;
+    font-size: 50px;
     font-family: italic;
 
 }
