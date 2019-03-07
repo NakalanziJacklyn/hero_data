@@ -36,11 +36,16 @@ button{
 .center1{
     border-radius: 10px;
     /* margin-left: 40%; */
-    font-size: 25px;
+    font-size: 30px;
     /* background-color: #615f5ed3; */
     height: 10%;
     width: 22%; 
-    color: black;
+    color: black,;
+}
+
+.center2{
+    margin-left: 20px;
+    font-size: 20px;
 }
 
 form p {
@@ -63,8 +68,9 @@ form p {
 .border{
     background-color:#615f5ed3;
     border-radius:50px;
-    text-align:center;
-    
+    text-align:center; 
+    height: 600px;
+    width: 400px;   
 }
 #muted{
     font-size:20px;
@@ -75,7 +81,7 @@ form p {
     display: grid;
     margin-top: 30px;
     grid-gap: 20px;
-    grid-template-areas: 'container main-data main-data main-data';
+    grid-template-areas: 'container main-data main-data main-data main-data main-data main-data';
 
 }
 
@@ -96,7 +102,8 @@ form p {
     margin-left: 4%;
 }
 
-
-
-
-
+img{
+    border-radius: 50%;
+    height: 50px;
+    width: 50px; 
+}

@@ -64,7 +64,7 @@ def register():
 
 
 
-# Comes after logging in
+# for only authenticated users
 @app.route("/search", methods=["GET", "POST"])
 @login_required
 def search():
@@ -105,7 +105,7 @@ def booklist():
 
     else:
         return render_template("error.html", error_message="We didn't find any book with the year you typed."
-                                                          " Please check for errors and try again.")
+                                                        " Please check for errors and try again.")
 
 # Page to show details info about book
 @app.route("/detail/<int:book_id>",methods=['GET','POST'])
@@ -116,7 +116,7 @@ def detail(book_id):
     return render_template("detail.html", success=True, book=book, reviews=reviews)
     
 
-# user comments
+# user comments and reviews
 @app.route("/detail/<int:book_id>/comment", methods=['GET', 'POST'])
 @login_required
 def comment(book_id):
@@ -128,9 +128,9 @@ def comment(book_id):
         flash('your comment has been added', 'success')
         return redirect(url_for('detail', book_id=book_id))
     return render_template('comment.html', title='Comment',
-                           form=form, legend='Comment')
+                    form=form, legend='Comment')
 
-
+#enabling users delete comments and accounts
 @app.route("/comment/<int:user_id>/delete", methods=['POST'])
 @login_required
 def delete_comment(comment_id):
@@ -141,3 +141,5 @@ def delete_comment(comment_id):
     db.session.commit()
     flash('Your comment has been deleted!', 'success')
     return redirect(url_for('detail'))
+
+

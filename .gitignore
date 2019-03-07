@@ -27,21 +27,20 @@ def api(ISBN):
         return render_template("error.html", error_message="We got an invalid ISBN. "
                                                            "Please check for the errors and try again.")
     review = db.execute("SELECT * FROM reviews WHERE book_id = :book_id", {"book_id": book.id}).fetchall()
-    count = 0
-    rating = 0
+    count = 1
+    rating = 1
     for review in reviews:
         count += 1
         rating += review.rating
     if count:
         average_rating = rating / count
     else:
-        average_rating = 0
+        average_rating = 1
 
     return jsonify(
         title=book.title,
         author=book.author,
         year=book.year,
         isbn=book.isbn,
-        review_count=count,
-        average_score=average_rating
+        
     )
