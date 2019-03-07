@@ -4,18 +4,20 @@
 
 <div class="row center">
     <h1>Book Details:</h1>
-    <p>
+    <p class="side">
     ISBN: {{ book.isbn }}<br>
     Title: {{ book.title }}<br>
     Author: {{ book.author }}<br>
     Year: {{ book.year }}<br>
     </p>   
 </div>
-   <button> <a class="ml-2" href="{{ url_for('comment',book_id=book.id) }}">Leave a comment</a></button>
-
+   <button> <a class="ml-2" id="red" href="{{ url_for('comment',book_id=book.id) }}">Leave a comment</a></button>
+<h1>Comments</h1>
 {% for review in reviews %}
-<div>{{review.review}}</div>
-<div>{{review.comment}}</div>
+
+<div class="center1">{{review.writer.username}}</div>
+<div class="center1">{{review.review}}</div>
+<div class="center1">{{review.comment}}</div>
 {% endfor %}
 
 {% endblock %}

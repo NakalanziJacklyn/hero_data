@@ -131,12 +131,13 @@ def comment(book_id):
                            form=form, legend='Comment')
 
 
-    # form = CommentForm()
-    # if form.validate_on_submit():
-    #     comment= Comment(comment=form.comment.data)
-    #     db.session.add(comment)
-    #     db.session.commit()
-    #     flash('Comment Successful', 'success')
-    #     return redirect(url_for('detail'))
-    # return render_template('comment.html', title='Comment',
-    #                        form=form, legend='Comment')
+@app.route("/comment/<int:user_id>/delete", methods=['POST'])
+@login_required
+def delete_comment(comment_id):
+    comment = Comment.query.get_or_404(comment_id)
+    if comment.author != current_user:
+        abort(403)
+    db.session.delete(comment)
+    db.session.commit()
+    flash('Your comment has been deleted!', 'success')
+    return redirect(url_for('detail'))

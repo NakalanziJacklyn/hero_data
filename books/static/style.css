@@ -1,31 +1,102 @@
 body{
     background: style="background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnqHYIgj89hMKwluQQUgZcduccOQiodNehrNamAB3O7JWdFfupDQ; background-repeat:no-repeat;  background-size:100%; background-position: 50% 50%";
 }
-.navbar {
+.change {
     border-radius: 0;
+    background-color: #615f5ed3;
 }
 
-a.navbar-brand {
-    font-family:'algeria, san-serif' ;
+.bread {
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 40px;
     text-align: center;
-
+    
 }
-
-p {
+ a{
+    font-size: 28px;
+    color: #000;
+} 
+p .side {
     text-align: center;
+    font-size: 100px; 
+    
+}
+.syd{
+    /* */
+    border-radius: 20px;
     font-size: 50px;
+    height: 40%;
+    width: 50%; 
+    margin-top: 20%; 
+}
+button{
+    border-radius: 40px;
+    margin-left: 40%;
+}
+.center1{
+    border-radius: 10px;
+    /* margin-left: 40%; */
+    font-size: 20px;
+    /* background-color: #615f5ed3; */
+    height: 10%;
+    width: 22%; 
+    color: lawngreen;
 }
 
 form p {
     text-align: center;
-}
+    }
 
-#box{
-    color: blue;
-}
+
 #login{
     text-align: center;
     font-size: 40px;
     font-family: serif;
 }
+#try label{
+       color:#000;
+       background-color:re
+}
+#try{
+    text-align: center;
+}
+.border{
+    background-color:#615f5ed3;
+    border-radius:50px;
+    text-align:center;
+    
+}
+#muted{
+    font-size:20px;
+    color:black;
+}
+
+.content-section{
+    display: grid;
+    margin-top: 30px;
+    grid-gap: 20px;
+    grid-template-areas: 'container main-data main-data main-data';
+
+}
+
+.container{
+    grid-area: container;
+   
+}
+
+.container p{
+    color: rgb(10, 10, 10);
+    font-size: 30px;
+    font-family: italic;
+
+}
+
+.main-data{
+    grid-area: main-data;
+    margin-left: 4%;
+}
+
+
+
+
+

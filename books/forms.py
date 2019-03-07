@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField,IntegerField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField,IntegerField,SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from books.models import User
 
@@ -24,7 +24,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
 class ReviewForm(FlaskForm):
-    review=IntegerField('', validators=[DataRequired()])
+    review=SelectField('Rating', validators=[DataRequired()],  choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')])
     comment = StringField('comment')
     submit = SubmitField('submit')
 
