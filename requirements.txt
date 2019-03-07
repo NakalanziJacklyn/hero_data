@@ -1,7 +1,4 @@
 Flask
-Flask-Session
-psycopg2
-requests
 gunicorn
 Flask-Bcrypt
 Flask-Login
