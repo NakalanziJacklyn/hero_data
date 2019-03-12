@@ -1,6 +1,6 @@
 import os
 import secrets
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, jsonify
 from books import app, db, bcrypt
 from books.forms import RegistrationForm, LoginForm, ReviewForm, SearchForm
 from books.models import User,Book,Review
@@ -80,7 +80,7 @@ def booklist():
 
     book_column = request.form.get("book_column")
     inputs = request.form.get("query")
-   
+
 
 
     if book_column == "year":
@@ -143,3 +143,22 @@ def delete_comment(comment_id):
     return redirect(url_for('detail'))
 
 
+# Page for the website's API
+@app.route("/api/<ISBN>", methods=["GET"])
+def api(ISBN):
+    book = Book.query.filter_by(isbn=ISBN).first()
+    # print(book)
+    if book is None:
+        return render_template("error.html", error_message="We got an invalid ISBN." "Please check for the errors and try again.")
+    reviews = book.reviews
+    
+    count = len(reviews)
+    return jsonify({
+        "title":book.title,
+        "author":book.author,
+        "year":book.year,
+        "isbn":book.isbn,
+        "reviews":count
+        
+    }
+    )
