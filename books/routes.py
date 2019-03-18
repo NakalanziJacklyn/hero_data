@@ -120,6 +120,10 @@ def detail(book_id):
 @app.route("/detail/<int:book_id>/comment", methods=['GET', 'POST'])
 @login_required
 def comment(book_id):
+    reviews=Review.query.filter_by(book_id=book_id).all()
+    if Review.user_id==current_user.id:
+        return redirect(url_for('detail'))
+    # else:    
     form=ReviewForm()
     if form.validate_on_submit():
         comment = Review(review=form.review.data, comment=form.comment.data, book_id=book_id, writer=current_user)
@@ -129,19 +133,6 @@ def comment(book_id):
         return redirect(url_for('detail', book_id=book_id))
     return render_template('comment.html', title='Comment',
                     form=form, legend='Comment')
-
-#enabling users delete comments and accounts
-@app.route("/comment/<int:user_id>/delete", methods=['POST'])
-@login_required
-def delete_comment(comment_id):
-    comment = Comment.query.get_or_404(comment_id)
-    if comment.author != current_user:
-        abort(403)
-    db.session.delete(comment)
-    db.session.commit()
-    flash('Your comment has been deleted!', 'success')
-    return redirect(url_for('detail'))
-
 
 # Page for the website's API
 @app.route("/api/<ISBN>", methods=["GET"])
